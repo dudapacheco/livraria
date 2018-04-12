@@ -1,24 +1,26 @@
-<%@page import="dao.EditoraDAO"%>
-<%@page import="modelo.Editora"%>
+<%@page import="dao.AutorDAO"%>
+<%@page import="modelo.Autor"%>
 <%@page import="java.util.List"%>
 
 <%@include file="../cabecalho.jsp" %>
 <%
     String msg = "";
     String classe = "";
-    Editora obj = new Editora();
-    EditoraDAO dao = new EditoraDAO();
+    Autor obj = new Autor();
+    AutorDAO dao = new AutorDAO();
     
     if (request.getParameter("txtNome") != null) {
         obj.setNome(request.getParameter("txtNome"));
     }
-     if (request.getParameter("txtLogo") != null) {
-        obj.setLogo(request.getParameter("txtLogo"));
+     if (request.getParameter("txtSexo") != null) {
+        obj.setSexo(request.getParameter("txtSexo").charAt(0));
      }
-     if (request.getParameter("txtLivroLista") != null) {
-        obj.setLogo(request.getParameter("txtLivroLista"));
+     if (request.getParameter("txtNacionalidade") != null) {
+        obj.setNacionalidade(request.getParameter("txtNacionalidade"));
      }
-     
+     if (request.getParameter("txtFotoAutor") != null) {
+        obj.setFoto(request.getParameter("txtFotoAutor"));
+     } 
         Boolean resultado = dao.incluir(obj);
         if (resultado) {
             msg = "Registro cadastrado com sucesso";
@@ -51,7 +53,7 @@
 <div class="row">
     <div class="panel panel-default">
         <div class="panel-heading">
-            Editoras
+            Autors
         </div>
         <div class="panel-body">
 
@@ -67,13 +69,21 @@
                         <input class="form-control" type="text"  name="txtNome"  required />
                     </div>
                     <div class="form-group">
-                        <label>Logotipo</label>
+                        <label>Sexo</label>
                         
-                        <input class="form-control" type="file"  name="txtLogo"  required />
+                        <input class="form-control" type="text"  name="txtSexo"  required />
+                        <select name="selecionar">
+                        <option value = "M">Masculino</option>
+                        <option value = "F">Feminino</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>Livro</label>
-                        <input class="form-control" type="text"  name="txtLivroLista"  required />
+                        <label>Nacionalidade</label>
+                        <input class="form-control" type="text"  name="txtNacionalidade "  required />
+                    </div>
+                    <div class="form-group">
+                        <label>Foto</label>
+                        <input class="form-control" type="file"  name="txtFotoAutor"  required />
                     </div>
 
                     <button class="btn btn-primary btn-sm" type="submit">Salvar</button>

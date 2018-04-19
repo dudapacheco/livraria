@@ -9,18 +9,12 @@
     Autor obj = new Autor();
     AutorDAO dao = new AutorDAO();
     
-    if (request.getParameter("txtNome") != null) {
+    if (request.getParameter("txtNome") != null && request.getParameter("txtSexo") != null && request.getParameter("txtNacionalidade") != null && request.getParameter("txtFotoAutor") != null) {
         obj.setNome(request.getParameter("txtNome"));
-    }
-     if (request.getParameter("txtSexo") != null) {
         obj.setSexo(request.getParameter("txtSexo").charAt(0));
-     }
-     if (request.getParameter("txtNacionalidade") != null) {
         obj.setNacionalidade(request.getParameter("txtNacionalidade"));
-     }
-     if (request.getParameter("txtFotoAutor") != null) {
         obj.setFoto(request.getParameter("txtFotoAutor"));
-     } 
+        
         Boolean resultado = dao.incluir(obj);
         if (resultado) {
             msg = "Registro cadastrado com sucesso";
@@ -29,9 +23,11 @@
             msg = "Não foi possível cadastrar";
             classe = "alert-danger";
         }
+     
+    }
+   
+ 
     
-    
-
 %>
 <div class="row">
     <div class="col-lg-12">
@@ -60,7 +56,7 @@
             <div class="alert <%=classe%>">
                 <%=msg%>
             </div>
-            <form action="UploadWS" method="post" enctype="multiparti/form-data">
+            <form action="../UploadWS" method="post" enctype="multipart/form-data">
 
                 <div class="col-lg-6">
 
@@ -71,15 +67,14 @@
                     <div class="form-group">
                         <label>Sexo</label>
                         
-                        <input class="form-control" type="text"  name="txtSexo"  required />
-                        <select name="selecionar">
+                        <select name="txtSexo">
                         <option value = "M">Masculino</option>
                         <option value = "F">Feminino</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Nacionalidade</label>
-                        <input class="form-control" type="text"  name="txtNacionalidade "  required />
+                        <input class="form-control" type="text"  name="txtNacionalidade"  required />
                     </div>
                     <div class="form-group">
                         <label>Foto</label>

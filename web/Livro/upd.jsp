@@ -1,14 +1,14 @@
 
 <%@page import="java.math.BigDecimal"%>
-<%@page import="modelo.Autor"%>
-<%@page import="dao.AutorDAO"%>
+<%@page import="modelo.Livro"%>
+<%@page import="dao.LivroDAO"%>
 <%@include file="../cabecalho.jsp" %>
 <%
 String msg ="";
 String classe = "";
     
-AutorDAO dao = new AutorDAO();
-Autor obj = new Autor();
+LivroDAO dao = new LivroDAO();
+Livro obj = new Livro();
     //verifica se é postm ou seja, quer alterar
     if(request.getMethod().equals("POST")){
         
@@ -37,7 +37,7 @@ Autor obj = new Autor();
             return;
         }
         
-        dao = new AutorDAO();
+        dao = new LivroDAO();
         obj = dao.buscarPorChavePrimaria(Integer.parseInt(request.getParameter("codigo")));
         
         if(obj == null){
@@ -66,7 +66,7 @@ Autor obj = new Autor();
 <div class="row">
     <div class="panel panel-default">
         <div class="panel-heading">
-        Autor
+        Livro
         </div>
         <div class="panel-body">
 

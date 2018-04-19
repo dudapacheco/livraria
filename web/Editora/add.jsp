@@ -9,16 +9,10 @@
     Editora obj = new Editora();
     EditoraDAO dao = new EditoraDAO();
     
-    if (request.getParameter("txtNome") != null) {
+    if (request.getParameter("txtNome") != null&& request.getParameter("txtLivroLista") != null) {
         obj.setNome(request.getParameter("txtNome"));
-    }
-     if (request.getParameter("txtLogo") != null) {
-        obj.setLogo(request.getParameter("txtLogo"));
-     }
-     if (request.getParameter("txtLivroLista") != null) {
-        obj.setLogo(request.getParameter("txtLivroLista"));
-     }
-     
+        obj.setLivroList(request.getParameter("txtLivroLista"));
+        
         Boolean resultado = dao.incluir(obj);
         if (resultado) {
             msg = "Registro cadastrado com sucesso";
@@ -27,7 +21,12 @@
             msg = "Não foi possível cadastrar";
             classe = "alert-danger";
         }
-    
+    }
+     if (request.getParameter("txtLogo") != null) {
+        obj.setLogo(request.getParameter("txtLogo"));
+     }
+     
+     
     
 
 %>
@@ -58,7 +57,7 @@
             <div class="alert <%=classe%>">
                 <%=msg%>
             </div>
-            <form action="UploadWS" method="post" enctype="multiparti/form-data">
+            <form action="../UploadWS" method="post" enctype="multiparti/form-data">
 
                 <div class="col-lg-6">
 

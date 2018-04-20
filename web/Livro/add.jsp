@@ -1,3 +1,10 @@
+<%@page import="modelo.Autor"%>
+<%@page import="dao.AutorDAO"%>
+<%@page import="util.StormData"%>
+<%@page import="modelo.Editora"%>
+<%@page import="dao.EditoraDAO"%>
+<%@page import="modelo.Categoria"%>
+<%@page import="dao.CategoriaDAO"%>
 <%@page import="dao.LivroDAO"%>
 <%@page import="modelo.Livro"%>
 <%@page import="java.util.List"%>
@@ -9,14 +16,31 @@
     Livro obj = new Livro();
     LivroDAO dao = new LivroDAO();
     
-    if (request.getParameter("txtNome") != null && 
-        request.getParameter("txtSexo") != null && request.getParameter("txtNacionalidade") != null && request.getParameter("txtFotoLivro") != null) {
-        obj.setNome(request.getParameter("txtNome"));
-        obj.setSexo(request.getParameter("txtSexo").charAt(0));
-        obj.setNacionalidade(request.getParameter("txtNacionalidade"));
-        obj.setFoto(request.getParameter("txtFotoLivro"));
+    CategoriaDAO cdao = new CategoriaDAO();
+    Categoria clista = new Categoria();
+    Categoria c = new Categoria();
+    c.setId(Integer.parseInt(request.getParameter("txtCodigo")));
+   
+    
+    EditoraDAO edao = new EditoraDAO();
+    Editora elista = new Editora();
+    Editora e = new Editora();
+    e.setCnpj(request.getParameter("txtCnpj"));
+    
+    
+    if(request.getParameter("txtNome") != null){
         
+        obj.setNome(request.getParameter("txtNome"));
+        obj.setPreco(Float.parseFloat(request.getParameter("txtPreco")));
+        obj.setDatapublicacao(StormData.formata(request.getParameter("txtData")));
+        obj.setImagem1(request.getParameter("txtFotoLivro1"));
+        obj.setImagem2(request.getParameter("txtFotoLivro2"));
+        obj.setImagem3(request.getParameter("txtFotoLivro3"));
+        obj.setSinopse(request.getParameter("txtSinopse"));
+       
+    
         Boolean resultado = dao.incluir(obj);
+        dao.fecharConexao();
         if (resultado) {
             msg = "Registro cadastrado com sucesso";
             classe = "alert-success";

@@ -15,7 +15,7 @@ String classe = "";
         obj.setCnpj(request.getParameter("txtCnpj"));
         obj.setNome(request.getParameter("txtNome"));
         obj.setLogo(request.getParameter("txtLogo"));
-        obj.setLivroList(request.getParameter("txtLivroLista"));
+        
 
         
         Boolean resultado = dao.alterar(obj);
@@ -36,8 +36,8 @@ String classe = "";
             return;
         }
         
-        dao = newEditoraDAO();
-        obj = dao.buscarPorChavePrimaria(Integer.parseInt(request.getParameter("codigo")));
+        dao = new EditoraDAO();
+        obj = dao.buscarPorChavePrimaria(request.getParameter("codigo"));
         
         if(obj == null){
             response.sendRedirect("index.jsp");
@@ -72,18 +72,23 @@ String classe = "";
             <div class="alert <%=classe%>">
                 <%=msg%>
             </div>
-            <form action="#" method="post">
+            <form action="../UploadWS" method="post" enctype="multipart/form-data">
                 
                 <div class="col-lg-6">
 
                     <div class="form-group">
-                        <label>Código</label>
-                        <input class="form-control" type="text" name="txtCodigo" readonly value="<%=obj.getId()%>"/>
+                        <label>CNPJ</label>
+                        <input class="form-control" type="text" name="txtCnpj" readonly value="<%=obj.getCnpj()%>"/>
                     </div>
                     
                     <div class="form-group">
                         <label>Nome</label>
                         <input class="form-control" type="text" name="txtNome" required value="<%=obj.getNome() %>" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Logotipo</label>
+                        <input class="form-control" type="file" name="txtLogo" required value="<%=obj.getLogo()%>" />
                     </div>
                   
 

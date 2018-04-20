@@ -16,6 +16,7 @@
         obj.setFoto(request.getParameter("txtFotoAutor"));
         
         Boolean resultado = dao.incluir(obj);
+        dao.fecharConexao();
         if (resultado) {
             msg = "Registro cadastrado com sucesso";
             classe = "alert-success";

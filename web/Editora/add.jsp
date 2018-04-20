@@ -9,11 +9,14 @@
     Editora obj = new Editora();
     EditoraDAO dao = new EditoraDAO();
     
-    if (request.getParameter("txtNome") != null&& request.getParameter("txtLivroLista") != null) {
+    if (request.getParameter("txtCnpj") != null && request.getParameter("txtNome") != null && request.getParameter("txtLogo") != null) {
+        obj.setCnpj(request.getParameter("txtCnpj"));
         obj.setNome(request.getParameter("txtNome"));
-        obj.setLivroList(request.getParameter("txtLivroLista"));
+        obj.setLogo(request.getParameter("txtLogo"));
+ 
         
         Boolean resultado = dao.incluir(obj);
+        dao.fecharConexao();
         if (resultado) {
             msg = "Registro cadastrado com sucesso";
             classe = "alert-success";
@@ -22,10 +25,7 @@
             classe = "alert-danger";
         }
     }
-     if (request.getParameter("txtLogo") != null) {
-        obj.setLogo(request.getParameter("txtLogo"));
-     }
-     
+    
      
     
 
@@ -57,10 +57,15 @@
             <div class="alert <%=classe%>">
                 <%=msg%>
             </div>
-            <form action="../UploadWS" method="post" enctype="multiparti/form-data">
+            <form action="../UploadWS" method="post" enctype="multipart/form-data">
 
                 <div class="col-lg-6">
 
+                    <div class="form-group">
+                        <label>CNPJ</label>
+                        <input class="form-control" type="text"  name="txtCnpj"  required />
+                    </div>
+                    
                     <div class="form-group">
                         <label>Nome</label>
                         <input class="form-control" type="text"  name="txtNome"  required />
@@ -70,10 +75,7 @@
                         
                         <input class="form-control" type="file"  name="txtLogo"  required />
                     </div>
-                    <div class="form-group">
-                        <label>Livro</label>
-                        <input class="form-control" type="text"  name="txtLivroLista"  required />
-                    </div>
+                    
 
                     <button class="btn btn-primary btn-sm" type="submit">Salvar</button>
 

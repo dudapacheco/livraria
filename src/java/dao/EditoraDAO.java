@@ -11,7 +11,7 @@ import modelo.Editora;
  *
  * @author Aluno
  */
-public class EditoraDAO extends GenericDAO<Editora, Integer> {
+public class EditoraDAO extends GenericDAO<Editora, String> {
     
     public EditoraDAO(){
         

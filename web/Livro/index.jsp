@@ -97,19 +97,13 @@
                         <td><%=item.getNome() %></td>
                         <td><%=item.getPreco()%></td>
                         <td><%=item.getDatapublicacao()%></td>
-                        <td><%=item.getImagem1()%></td>
-                        <td><%=item.getImagem2()%></td>
-                        <td><%=item.getImagem3()%></td>
+                        <td><img src="../arquivos/<%=item.getImagem1()%>" width="100" height="80"/></td>
+                        <td><img src="../arquivos/<%=item.getImagem2()%>" width="100" height="80"/></td>
+                        <td><img src="../arquivos/<%=item.getImagem3()%>" width="100" height="80"/></td>
                         <td><%=item.getSinopse()%></td>
                         <td><%=item.getCategoria()%></td>
                         <td><%=item.getEditora()%></td>
                         <td><%=item.getAutorLivroList()%></td>
-
-
-
-                        <td><img src="../arquivos/<%=item.getImagem1()%>" width="100" height="80"/></td>
-                        <td><img src="../arquivos/<%=item.getImagem2()%>" width="100" height="80"/></td>
-                        <td><img src="../arquivos/<%=item.getImagem3()%>" width="100" height="80"/></td>
 
 
                         <td><a href="upd.jsp?codigo=<%=item.getId()%>" class="btn  btn-primary btn-sm">Alterar</a>

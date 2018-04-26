@@ -13,22 +13,45 @@
 <%
     String msg = "";
     String classe = "";
+    AutorDAO adao = new AutorDAO();
+    if(request.getMethod().equals("POST")){
+        //pego uma lista de autores(com mesmo name)
+        String[] autoresid = request.getParameterValues("autores");
+        //popular o livro
+        Livro l = new Livro();
+        l.setNome("StorTroopers - Uma viagem que nao sai");
+        l.setDatapublicacao(new Date());
+        l.setPreco(13.12f);
+        //Autores
+        List<Autor> listaautores = new ArrayList<>();
+        for (String id : autoresid) {
+            Integer idinteger = Integer.parseInt(id);
+            listaautores.add(adao.buscarPorChavePrimaria(idinteger));
+         }
+        l.setAutorList(listaautores);
+        
+        LivroDAO dao = new LivroDAO();
+        dao.incluir(l);
+    }
+    
+    
+    //pego meus autores
+  
+    List<Autor> autores = adao.listar();
+    
     Livro obj = new Livro();
     LivroDAO dao = new LivroDAO();
     
     CategoriaDAO cdao = new CategoriaDAO();
     Categoria clista = new Categoria();
     Categoria c = new Categoria();
-    c.setId(Integer.parseInt(request.getParameter("txtCodigo")));
    
-    
     EditoraDAO edao = new EditoraDAO();
     Editora elista = new Editora();
     Editora e = new Editora();
-    e.setCnpj(request.getParameter("txtCnpj"));
     
-    
-    if(request.getParameter("txtNome") != null){
+        
+    if(request.getParameter("txtNome") != null && request.getParameter("txtPreco") !=  null && request.getParameter("txtData") != null && request.getParameter("txtSinopse") != null && request.getParameter("txtCategoria") != null && request.getParameter("txtEditora") != null ){
         
         obj.setNome(request.getParameter("txtNome"));
         obj.setPreco(Float.parseFloat(request.getParameter("txtPreco")));
@@ -37,7 +60,9 @@
         obj.setImagem2(request.getParameter("txtFotoLivro2"));
         obj.setImagem3(request.getParameter("txtFotoLivro3"));
         obj.setSinopse(request.getParameter("txtSinopse"));
-       
+        c.setId(Integer.parseInt(request.getParameter("txtCategoria")));
+        e.setCnpj(request.getParameter("txtEditora"));
+        
     
         Boolean resultado = dao.incluir(obj);
         dao.fecharConexao();
@@ -115,12 +140,33 @@
                         <input class="form-control" type="text"  name="txtSinopse"  required />
                     </div>
                     <div class="form-group">
-                        <label>Categoria</label>
-                        <input class="form-control" type="text"  name="txtCategoria"  required />
+                        <label>Categoria:</label>
+                        <select name =" txtCategoria" required/>
+                        <%
+                            for(Categoria item : clista){
+                            
+                            %>
+                            <option value ="<%=item.getId()%>">
+                                <%=item.getNome()%>
+                            </option>
+                            <%
+                                }
+                            %>
                     </div>
                     <div class="form-group">
                         <label>Editora</label>
-                        <input class="form-control" type="text"  name="txtEditora"  required />
+                        <select name =" txtEditora" required/>
+
+                        <%
+                            for(Editora it : elista){
+                            
+                            %>
+                            <option value ="<%=it.getCnpj()%>">
+                                <%=it.getNome()%>
+                            </option>
+                            <%
+                                }
+                            %>
                     </div>
                     <div class="form-group">
                         <label>Autor</label>

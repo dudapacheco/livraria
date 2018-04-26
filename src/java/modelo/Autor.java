@@ -8,15 +8,16 @@ package modelo;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -51,8 +52,11 @@ public class Autor implements Serializable {
     private Character sexo;
     @Column(name = "foto")
     private String foto;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "autor")
-    private List<AutorLivro> autorLivroList;
+    @JoinTable(name = "autor_livro", joinColumns = {
+        @JoinColumn(name = "autor", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "livro", referencedColumnName = "id")})
+    @ManyToMany
+    private List<Livro> livroList;
 
     public Autor() {
     }
@@ -108,12 +112,12 @@ public class Autor implements Serializable {
         this.foto = foto;
     }
 
-    public List<AutorLivro> getAutorLivroList() {
-        return autorLivroList;
+    public List<Livro> getLivroList() {
+        return livroList;
     }
 
-    public void setAutorLivroList(List<AutorLivro> autorLivroList) {
-        this.autorLivroList = autorLivroList;
+    public void setLivroList(List<Livro> livroList) {
+        this.livroList = livroList;
     }
 
     @Override

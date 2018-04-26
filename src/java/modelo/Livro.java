@@ -9,17 +9,16 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -66,14 +65,14 @@ public class Livro implements Serializable {
     private String imagem3;
     @Column(name = "sinopse")
     private String sinopse;
+    @ManyToMany(mappedBy = "livroList")
+    private List<Autor> autorList;
     @JoinColumn(name = "categoria", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Categoria categoria;
     @JoinColumn(name = "editora", referencedColumnName = "cnpj")
     @ManyToOne(optional = false)
     private Editora editora;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "livro")
-    private List<AutorLivro> autorLivroList;
 
     public Livro() {
     }
@@ -153,6 +152,14 @@ public class Livro implements Serializable {
         this.sinopse = sinopse;
     }
 
+    public List<Autor> getAutorList() {
+        return autorList;
+    }
+
+    public void setAutorList(List<Autor> autorList) {
+        this.autorList = autorList;
+    }
+
     public Categoria getCategoria() {
         return categoria;
     }
@@ -167,14 +174,6 @@ public class Livro implements Serializable {
 
     public void setEditora(Editora editora) {
         this.editora = editora;
-    }
-
-    public List<AutorLivro> getAutorLivroList() {
-        return autorLivroList;
-    }
-
-    public void setAutorLivroList(List<AutorLivro> autorLivroList) {
-        this.autorLivroList = autorLivroList;
     }
 
     @Override

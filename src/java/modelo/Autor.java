@@ -52,10 +52,7 @@ public class Autor implements Serializable {
     private Character sexo;
     @Column(name = "foto")
     private String foto;
-    @JoinTable(name = "autor_livro", joinColumns = {
-        @JoinColumn(name = "autor", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "livro", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "AutorList")
     private List<Livro> livroList;
 
     public Autor() {

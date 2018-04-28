@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="modelo.Autor"%>
 <%@page import="dao.AutorDAO"%>
 <%@page import="util.StormData"%>
@@ -14,27 +15,6 @@
     String msg = "";
     String classe = "";
     AutorDAO adao = new AutorDAO();
-    if(request.getMethod().equals("POST")){
-        //pego uma lista de autores(com mesmo name)
-        String[] autoresid = request.getParameterValues("autores");
-        //popular o livro
-        Livro l = new Livro();
-        l.setNome("StorTroopers - Uma viagem que nao sai");
-        l.setDatapublicacao(new Date());
-        l.setPreco(13.12f);
-        //Autores
-        List<Autor> listaautores = new ArrayList<>();
-        for (String id : autoresid) {
-            Integer idinteger = Integer.parseInt(id);
-            listaautores.add(adao.buscarPorChavePrimaria(idinteger));
-         }
-        l.setAutorList(listaautores);
-        
-        LivroDAO dao = new LivroDAO();
-        dao.incluir(l);
-    }
-    
-    
     //pego meus autores
   
     List<Autor> autores = adao.listar();
@@ -43,13 +23,18 @@
     LivroDAO dao = new LivroDAO();
     
     CategoriaDAO cdao = new CategoriaDAO();
-    Categoria clista = new Categoria();
     Categoria c = new Categoria();
+    List<Categoria> clista = cdao.listar();
+    
    
     EditoraDAO edao = new EditoraDAO();
-    Editora elista = new Editora();
     Editora e = new Editora();
+    List<Editora> elista = edao.listar();
     
+    if(request.getMethod().equals("POST")){
+        //pego uma lista de autores(com mesmo name)
+        String[] autoresid = request.getParameter("autores").split(";");
+        //popular o livro
         
     if(request.getParameter("txtNome") != null && request.getParameter("txtPreco") !=  null && request.getParameter("txtData") != null && request.getParameter("txtSinopse") != null && request.getParameter("txtCategoria") != null && request.getParameter("txtEditora") != null ){
         
@@ -62,8 +47,18 @@
         obj.setSinopse(request.getParameter("txtSinopse"));
         c.setId(Integer.parseInt(request.getParameter("txtCategoria")));
         e.setCnpj(request.getParameter("txtEditora"));
+        obj.setCategoria(c);
+        obj.setEditora(e);
         
-    
+        
+    //Autores
+            List<Autor> listaautores = new ArrayList<>();
+            for (String id : autoresid) {
+                Integer idinteger = Integer.parseInt(id);
+                listaautores.add(adao.buscarPorChavePrimaria(idinteger));
+            }
+            obj.setAutorList(listaautores);
+        
         Boolean resultado = dao.incluir(obj);
         dao.fecharConexao();
         if (resultado) {
@@ -74,6 +69,7 @@
             classe = "alert-danger";
         }
      
+    }
     }
    
  
@@ -141,7 +137,7 @@
                     </div>
                     <div class="form-group">
                         <label>Categoria:</label>
-                        <select name =" txtCategoria" required/>
+                        <select name ="txtCategoria" required>
                         <%
                             for(Categoria item : clista){
                             
@@ -152,25 +148,40 @@
                             <%
                                 }
                             %>
+                            
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Editora</label>
-                        <select name =" txtEditora" required/>
+                        <select name="txtEditora" required>
 
                         <%
-                            for(Editora it : elista){
+                            for(Editora item : elista){
                             
                             %>
-                            <option value ="<%=it.getCnpj()%>">
-                                <%=it.getNome()%>
+                            <option value ="<%=item.getCnpj()%>">
+                                <%=item.getNome()%>
                             </option>
                             <%
                                 }
                             %>
+                    </select>
                     </div>
                     <div class="form-group">
                         <label>Autor</label>
-                        <input class="form-control" type="text"  name="txt Autor"  required />
+                       <select name ="txtAutor" required>
+
+                        <%
+                            for(Autor item : autores){
+                            
+                            %>
+                            <option value ="<%=item.getId()%>">
+                                <%=item.getNome()%>
+                            </option>
+                            <%
+                                }
+                            %>
+                       </select>
                     </div>
                     
 

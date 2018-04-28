@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -65,7 +66,11 @@ public class Livro implements Serializable {
     private String imagem3;
     @Column(name = "sinopse")
     private String sinopse;
-    @ManyToMany(mappedBy = "livroList")
+    @JoinTable(name = "autor_livro", joinColumns = {
+        @JoinColumn(name = "autor", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "livro", referencedColumnName = "id")})
+    @ManyToMany
+    
     private List<Autor> autorList;
     @JoinColumn(name = "categoria", referencedColumnName = "id")
     @ManyToOne(optional = false)

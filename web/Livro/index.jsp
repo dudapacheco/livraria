@@ -103,8 +103,6 @@
                         <td><%=item.getSinopse()%></td>
                         <td><%=item.getCategoria()%></td>
                         <td><%=item.getEditora()%></td>
-                        <td><%=item.getAutorLivroList()%></td>
-
 
                         <td><a href="upd.jsp?codigo=<%=item.getId()%>" class="btn  btn-primary btn-sm">Alterar</a>
                             <button class="btn  btn-danger btn-sm" data-toggle="modal" data-target="#myModal" onclick="codigo=<%=item.getId()%>">Excluir</button>  

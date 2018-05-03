@@ -28,11 +28,8 @@ import javax.persistence.Table;
 @Table(name = "autor")
 @NamedQueries({
     @NamedQuery(name = "Autor.findAll", query = "SELECT a FROM Autor a"),
-    @NamedQuery(name = "Autor.findById", query = "SELECT a FROM Autor a WHERE a.id = :id"),
-    @NamedQuery(name = "Autor.findByNome", query = "SELECT a FROM Autor a WHERE a.nome = :nome"),
-    @NamedQuery(name = "Autor.findByNacionalidade", query = "SELECT a FROM Autor a WHERE a.nacionalidade = :nacionalidade"),
-    @NamedQuery(name = "Autor.findBySexo", query = "SELECT a FROM Autor a WHERE a.sexo = :sexo"),
-    @NamedQuery(name = "Autor.findByFoto", query = "SELECT a FROM Autor a WHERE a.foto = :foto")})
+    @NamedQuery(name = "Autor.findFilter", query = "SELECT a FROM Autor a WHERE a.nome like :filtro")})
+
 public class Autor implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,7 +49,7 @@ public class Autor implements Serializable {
     private Character sexo;
     @Column(name = "foto")
     private String foto;
-    @ManyToMany(mappedBy = "AutorList")
+    @ManyToMany(mappedBy = "autorList")
     private List<Livro> livroList;
 
     public Autor() {
@@ -139,7 +136,7 @@ public class Autor implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.Autor[ id=" + id + " ]";
+        return "" + id + "";
     }
     
 }

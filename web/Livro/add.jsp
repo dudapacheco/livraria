@@ -33,7 +33,7 @@
     
     if(request.getMethod().equals("POST")){
         //pego uma lista de autores(com mesmo name)
-        String[] autoresid = request.getParameter("autores").split(";");
+        String[] autoresid = request.getParameter("txtAutor").split(";");
         //popular o livro
         
     if(request.getParameter("txtNome") != null && request.getParameter("txtPreco") !=  null && request.getParameter("txtData") != null && request.getParameter("txtSinopse") != null && request.getParameter("txtCategoria") != null && request.getParameter("txtEditora") != null ){
@@ -167,21 +167,13 @@
                             %>
                     </select>
                     </div>
-                    <div class="form-group">
+                     <div class="form-group">
                         <label>Autor</label>
-                       <select name ="txtAutor" required>
-
                         <%
                             for(Autor item : autores){
-                            
-                            %>
-                            <option value ="<%=item.getId()%>">
-                                <%=item.getNome()%>
-                            </option>
-                            <%
-                                }
-                            %>
-                       </select>
+                        %>
+                        <input class="form-control" type="checkbox"  name="txtAutor"  required value="<%=item.getId()%>"><%=item.getNome()%>
+                        <%}%>
                     </div>
                     
 

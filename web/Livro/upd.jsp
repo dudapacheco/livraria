@@ -34,10 +34,10 @@
     
     if(request.getMethod().equals("POST")){
         //pego uma lista de autores(com mesmo name)
-        String[] autoresid = request.getParameter("autores").split(";");
+        String[] autoresid = request.getParameter("txtAutor").split(";");
         //popular o livro
         
-    if(request.getParameter("txtNome") != null && request.getParameter("txtPreco") !=  null && request.getParameter("txtData") != null && request.getParameter("txtSinopse") != null && request.getParameter("txtCategoria") != null && request.getParameter("txtEditora") != null ){
+    
         
         obj.setNome(request.getParameter("txtNome"));
         obj.setPreco(Float.parseFloat(request.getParameter("txtPreco")));
@@ -60,8 +60,9 @@
                 listaautores.add(adao.buscarPorChavePrimaria(idinteger));
             }
             obj.setAutorList(listaautores);
-        
-        Boolean resultado = dao.incluir(obj);
+            
+            
+            Boolean resultado = dao.alterar(obj);
         dao.fecharConexao();
         if (resultado) {
             msg = "Registro cadastrado com sucesso";
@@ -70,10 +71,28 @@
             msg = "Não foi possível cadastrar";
             classe = "alert-danger";
         }
-     
+        
+        
     }
-   
- 
+    else{
+        //e GET
+        if(request.getParameter("codigo") == null){
+            response.sendRedirect("index.jsp");
+            return;
+        }
+        
+        dao = new LivroDAO();
+        obj = dao.buscarPorChavePrimaria(Integer.parseInt(request.getParameter("codigo")));
+        
+        
+        if(obj == null){
+            response.sendRedirect("index.jsp");
+            return;
+        } 
+    }
+          
+
+
     
 %>
 <div class="row">
@@ -109,36 +128,36 @@
 
                     <div class="form-group">
                         <label>Nome</label>
-                        <input class="form-control" type="text"  name="txtNome"  required />
+                        <input class="form-control" type="text"  name="txtNome"  required value="<%=obj.getNome()%>"/>
                     </div>
                     <div class="form-group">
                         <label>Preço</label>
-                        <input class="form-control" type="text"  name="txtPreco"  required />
+                        <input class="form-control" type="text"  name="txtPreco"  required value="<%=obj.getPreco()%>" />
                         
                     </div>
                     <div class="form-group">
                         <label>Data da publicação</label>
-                        <input class="form-control" type="text"  name="txtData"  required />
+                        <input class="form-control" type="text"  name="txtData"  required value="<%=obj.getDatapublicacao()%>"/>
                     </div>
                     <div class="form-group">
                         <label>Foto 1</label>
-                        <input class="form-control" type="file"  name="txtFotoLivro1"  required />
+                        <input class="form-control" type="file"  name="txtFotoLivro1"  required value="<%=obj.getImagem1()%>"/>
                     </div>
                     <div class="form-group">
                         <label>Foto 2</label>
-                        <input class="form-control" type="file"  name="txtFotoLivro2"  required />
+                        <input class="form-control" type="file"  name="txtFotoLivro2"  required value="<%=obj.getImagem2()%>"/>
                     </div>
                     <div class="form-group">
                         <label>Foto 3</label>
-                        <input class="form-control" type="file"  name="txtFotoLivro3"  required />
+                        <input class="form-control" type="file"  name="txtFotoLivro3"  required value="<%=obj.getImagem3()%>"/>
                     </div>
                     <div class="form-group">
                         <label>Sinopse</label>
-                        <input class="form-control" type="text"  name="txtSinopse"  required />
+                        <input class="form-control" type="text"  name="txtSinopse"  required value="<%=obj.getSinopse()%>"/>
                     </div>
-                    <div class="form-group">
+                   <div class="form-group">
                         <label>Categoria:</label>
-                        <select name =" txtCategoria" required/>
+                        <select name ="txtCategoria" required>
                         <%
                             for(Categoria item : clista){
                             
@@ -149,10 +168,12 @@
                             <%
                                 }
                             %>
+                            
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Editora</label>
-                        <select name =" txtEditora" required/>
+                        <select name="txtEditora" required>
 
                         <%
                             for(Editora item : elista){
@@ -164,22 +185,17 @@
                             <%
                                 }
                             %>
+                    </select>
                     </div>
                     <div class="form-group">
                         <label>Autor</label>
-                       <select name =" txtAutor" required/>
-
                         <%
                             for(Autor item : autores){
-                            
-                            %>
-                            <option value ="<%=item.getId()%>">
-                                <%=item.getNome()%>
-                            </option>
-                            <%
-                                }
-                            %>
+                        %>
+                        <input class="form-control" type="checkbox"  name="txtAutor"  required value="<%=item.getId()%>"><%=item.getNome()%>
+                        <%}%>
                     </div>
+                    
                     
 
                     <button class="btn btn-primary btn-sm" type="submit">Salvar</button>

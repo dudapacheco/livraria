@@ -1,3 +1,13 @@
+<%
+    //verifica se está logado
+    if(session.getAttribute("administrador") == null){
+        
+        response.sendRedirect("../login.jsp");
+        return;
+        
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -73,16 +83,16 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li>
-                        <a href="../console/"><i class="fa fa-fw fa-edit"></i>Autores</a>
+                        <a href="../Autor/"><i class="fa fa-fw fa-edit"></i>Autores</a>
                     </li>
                     <li>
-                        <a href="../joystick/"><i class="fa fa-fw fa-bar-chart-o"></i>Categorias</a>
+                        <a href="../categoria/"><i class="fa fa-fw fa-bar-chart-o"></i>Categorias</a>
                     </li>
                     <li>
-                        <a href="../joystick/"><i class="fa fa-fw fa-bar-chart-o"></i>Editoras</a>
+                        <a href="../Editora/"><i class="fa fa-fw fa-bar-chart-o"></i>Editoras</a>
                     </li>
                     <li>
-                        <a href="../joystick/"><i class="fa fa-fw fa-bar-chart-o"></i>Livros</a>
+                        <a href="../Livro/"><i class="fa fa-fw fa-bar-chart-o"></i>Livros</a>
                     </li>
                     
                 </ul>

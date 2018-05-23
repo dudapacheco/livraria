@@ -17,7 +17,16 @@ Autor obj = new Autor();
         obj.setNome(request.getParameter("txtNome"));
         obj.setSexo(request.getParameter("txtSexo").charAt(0));
         obj.setNacionalidade(request.getParameter("txtNacionalidade"));
-        obj.setFoto(request.getParameter("txtFoto"));
+        if(request.getParameter("txtFoto") != null)
+        {
+            obj.setFoto(request.getParameter("txtFoto"));
+            
+        }
+        else{
+            
+            obj.setFoto(request.getParameter("txtFotoVelha"));
+        }
+        
         
         Boolean resultado = dao.alterar(obj);
         
@@ -102,7 +111,9 @@ Autor obj = new Autor();
                     
                      <div class="form-group">
                         <label>Foto</label>
-                        <input class="form-control" type="file" name="txtFoto" required value="<%=obj.getFoto()%>" />
+                       <input class="form-control" type="file" name="txtFoto" id="arquivo1"  accept="image/*" />
+                       <img src="../arquivos/<%=obj.getFoto()%>" id="img1"/>
+                       <input type="hidden" name="txtFotoVelha" value="<%=obj.getFoto()%>"/>
                     </div>
                   
 
@@ -118,3 +129,21 @@ Autor obj = new Autor();
 </div>
 <!-- /.row -->
 <%@include file="../rodape.jsp" %>
+    
+    <script>
+    function readURL(input,destino) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#'+destino).attr('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+    $("#txtFotoLivro1").change(function(){
+        readURL(this,"img1");
+    });
+    </script>

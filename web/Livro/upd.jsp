@@ -121,14 +121,17 @@
                         <label>Foto 1</label>
                         <input class="form-control" type="file" name="txtFotoLivro1" id="arquivo1"  accept="image/*" />
                         <img src="../arquivos/<%=obj.getImagem1()%>" id="img1"/>
+                        
                     </div>
                     <div class="form-group">
                         <label>Foto 2</label>
-                        <input class="form-control" type="file"  name="txtFotoLivro2"  required value="<%=obj.getImagem2()%>"/>
+                       <input class="form-control" type="file" name="txtFotoLivro2" id="arquivo2"  accept="image/*" />
+                        <img src="../arquivos/<%=obj.getImagem2()%>" id="img2"/>
                     </div>
                     <div class="form-group">
                         <label>Foto 3</label>
-                        <input class="form-control" type="file"  name="txtFotoLivro3"  required value="<%=obj.getImagem3()%>"/>
+                        <input class="form-control" type="file" name="txtFotoLivro3" id="arquivo3"  accept="image/*" />
+                        <img src="../arquivos/<%=obj.getImagem2()%>" id="img3"/>
                     </div>
                     <div class="form-group">
                         <label>Sinopse</label>
@@ -194,7 +197,7 @@
                           }
 
                            %>
-                        <input type="checkbox" name="autoreschk" <%=selecionado%> value="<%=a.getId()%>"><%=a.getNome()%>
+                        <input type="checkbox" name="autoreschk" <%=selecionado%>  value="<%=a.getId()%>"><%=a.getNome()%>
 
                         <%}%>
 
@@ -229,5 +232,11 @@
     
     $("#txtFotoLivro1").change(function(){
         readURL(this,"img1");
+    });
+     $("#txtFotoLivro2").change(function(){
+        readURL(this,"img2");
+    });
+     $("#txtFotoLivro3").change(function(){
+        readURL(this,"img3");
     });
 </script>
